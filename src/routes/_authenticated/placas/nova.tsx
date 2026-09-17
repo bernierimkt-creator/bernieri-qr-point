@@ -47,7 +47,10 @@ function NewPlatePage() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    if (!name.trim()) return toast.error("Informe um nome para a placa.");
+    if (!name.trim()) {
+      toast.error("Informe um nome para a placa.");
+      return;
+    }
     create.mutate(name.trim());
   }
 
