@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as QCodeRouteImport } from './routes/q.$code'
+import { Route as AuthenticatedDestinosIndexRouteImport } from './routes/_authenticated/destinos/index'
 import { Route as AuthenticatedPlacasIndexRouteImport } from './routes/_authenticated/placas/index'
 import { Route as AuthenticatedPlacasNovaRouteImport } from './routes/_authenticated/placas/nova'
 import { Route as AuthenticatedPlacasCodeConfigurarRouteImport } from './routes/_authenticated/placas/$code.configurar'
@@ -37,6 +38,12 @@ const QCodeRoute = QCodeRouteImport.update({
   path: '/q/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedDestinosIndexRoute =
+  AuthenticatedDestinosIndexRouteImport.update({
+    id: '/destinos/',
+    path: '/destinos/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPlacasIndexRoute =
   AuthenticatedPlacasIndexRouteImport.update({
     id: '/placas/',
@@ -66,6 +73,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/q/$code': typeof QCodeRoute
   '/placas/nova': typeof AuthenticatedPlacasNovaRoute
+  '/destinos/': typeof AuthenticatedDestinosIndexRoute
   '/placas/': typeof AuthenticatedPlacasIndexRoute
   '/placas/$code/configurar': typeof AuthenticatedPlacasCodeConfigurarRoute
   '/placas/$code/qr': typeof AuthenticatedPlacasCodeQrRoute
@@ -75,6 +83,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/q/$code': typeof QCodeRoute
   '/placas/nova': typeof AuthenticatedPlacasNovaRoute
+  '/destinos': typeof AuthenticatedDestinosIndexRoute
   '/placas': typeof AuthenticatedPlacasIndexRoute
   '/placas/$code/configurar': typeof AuthenticatedPlacasCodeConfigurarRoute
   '/placas/$code/qr': typeof AuthenticatedPlacasCodeQrRoute
@@ -86,6 +95,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/q/$code': typeof QCodeRoute
   '/_authenticated/placas/nova': typeof AuthenticatedPlacasNovaRoute
+  '/_authenticated/destinos/': typeof AuthenticatedDestinosIndexRoute
   '/_authenticated/placas/': typeof AuthenticatedPlacasIndexRoute
   '/_authenticated/placas/$code/configurar': typeof AuthenticatedPlacasCodeConfigurarRoute
   '/_authenticated/placas/$code/qr': typeof AuthenticatedPlacasCodeQrRoute
@@ -97,6 +107,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/q/$code'
     | '/placas/nova'
+    | '/destinos/'
     | '/placas/'
     | '/placas/$code/configurar'
     | '/placas/$code/qr'
@@ -106,6 +117,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/q/$code'
     | '/placas/nova'
+    | '/destinos'
     | '/placas'
     | '/placas/$code/configurar'
     | '/placas/$code/qr'
@@ -116,6 +128,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/q/$code'
     | '/_authenticated/placas/nova'
+    | '/_authenticated/destinos/'
     | '/_authenticated/placas/'
     | '/_authenticated/placas/$code/configurar'
     | '/_authenticated/placas/$code/qr'
@@ -158,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/destinos/': {
+      id: '/_authenticated/destinos/'
+      path: '/destinos'
+      fullPath: '/destinos/'
+      preLoaderRoute: typeof AuthenticatedDestinosIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/placas/': {
       id: '/_authenticated/placas/'
       path: '/placas'
@@ -191,6 +211,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedPlacasNovaRoute: typeof AuthenticatedPlacasNovaRoute
+  AuthenticatedDestinosIndexRoute: typeof AuthenticatedDestinosIndexRoute
   AuthenticatedPlacasIndexRoute: typeof AuthenticatedPlacasIndexRoute
   AuthenticatedPlacasCodeConfigurarRoute: typeof AuthenticatedPlacasCodeConfigurarRoute
   AuthenticatedPlacasCodeQrRoute: typeof AuthenticatedPlacasCodeQrRoute
@@ -198,6 +219,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedPlacasNovaRoute: AuthenticatedPlacasNovaRoute,
+  AuthenticatedDestinosIndexRoute: AuthenticatedDestinosIndexRoute,
   AuthenticatedPlacasIndexRoute: AuthenticatedPlacasIndexRoute,
   AuthenticatedPlacasCodeConfigurarRoute:
     AuthenticatedPlacasCodeConfigurarRoute,
