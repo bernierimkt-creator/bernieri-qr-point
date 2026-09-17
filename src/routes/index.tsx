@@ -1,24 +1,40 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { Logo } from "@/components/admin-layout";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "QR Manager — placas com QR Code permanente" },
+      {
+        name: "description",
+        content: "Painel privado para gerenciar placas físicas com QR Codes permanentes e destinos trocáveis.",
+      },
+      { property: "og:title", content: "QR Manager — placas com QR Code permanente" },
+      {
+        property: "og:description",
+        content: "Painel privado para gerenciar placas físicas com QR Codes permanentes e destinos trocáveis.",
+      },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      navigate({ to: data.session ? "/placas" : "/auth", replace: true });
+    });
+  }, [navigate]);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="ambient-bg flex min-h-screen items-center justify-center">
+      <div className="animate-pulse">
+        <Logo />
+      </div>
     </div>
   );
 }
