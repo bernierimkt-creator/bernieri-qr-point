@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedLerQrRouteImport } from './routes/_authenticated/ler-qr'
 import { Route as QCodeRouteImport } from './routes/q.$code'
 import { Route as AuthenticatedDestinosIndexRouteImport } from './routes/_authenticated/destinos/index'
 import { Route as AuthenticatedDestinosNovoRouteImport } from './routes/_authenticated/destinos/novo'
@@ -33,6 +34,11 @@ const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedLerQrRoute = AuthenticatedLerQrRouteImport.update({
+  id: '/ler-qr',
+  path: '/ler-qr',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const QCodeRoute = QCodeRouteImport.update({
   id: '/q/$code',
@@ -78,6 +84,7 @@ const AuthenticatedPlacasCodeQrRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/ler-qr': typeof AuthenticatedLerQrRoute
   '/q/$code': typeof QCodeRoute
   '/destinos/novo': typeof AuthenticatedDestinosNovoRoute
   '/placas/nova': typeof AuthenticatedPlacasNovaRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/ler-qr': typeof AuthenticatedLerQrRoute
   '/q/$code': typeof QCodeRoute
   '/destinos/novo': typeof AuthenticatedDestinosNovoRoute
   '/placas/nova': typeof AuthenticatedPlacasNovaRoute
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/ler-qr': typeof AuthenticatedLerQrRoute
   '/q/$code': typeof QCodeRoute
   '/_authenticated/destinos/novo': typeof AuthenticatedDestinosNovoRoute
   '/_authenticated/placas/nova': typeof AuthenticatedPlacasNovaRoute
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/ler-qr'
     | '/q/$code'
     | '/destinos/novo'
     | '/placas/nova'
@@ -126,6 +136,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/ler-qr'
     | '/q/$code'
     | '/destinos/novo'
     | '/placas/nova'
@@ -138,6 +149,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/ler-qr'
     | '/q/$code'
     | '/_authenticated/destinos/novo'
     | '/_authenticated/placas/nova'
@@ -176,6 +188,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/ler-qr': {
+      id: '/_authenticated/ler-qr'
+      path: '/ler-qr'
+      fullPath: '/ler-qr'
+      preLoaderRoute: typeof AuthenticatedLerQrRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/q/$code': {
       id: '/q/$code'
@@ -230,6 +249,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedLerQrRoute: typeof AuthenticatedLerQrRoute
   AuthenticatedDestinosNovoRoute: typeof AuthenticatedDestinosNovoRoute
   AuthenticatedPlacasNovaRoute: typeof AuthenticatedPlacasNovaRoute
   AuthenticatedDestinosIndexRoute: typeof AuthenticatedDestinosIndexRoute
@@ -239,6 +259,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedLerQrRoute: AuthenticatedLerQrRoute,
   AuthenticatedDestinosNovoRoute: AuthenticatedDestinosNovoRoute,
   AuthenticatedPlacasNovaRoute: AuthenticatedPlacasNovaRoute,
   AuthenticatedDestinosIndexRoute: AuthenticatedDestinosIndexRoute,
