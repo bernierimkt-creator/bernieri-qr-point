@@ -9,8 +9,9 @@ export function generatePlateCode(length = 6): string {
   return out;
 }
 
-export function publicPlateUrl(code: string, origin: string): string {
-  return `${origin}/q/${code}`;
+/** Monta a URL pública permanente da placa: <origem>/q/CODIGO. */
+export function publicPlateUrl(origin: string, code: string): string {
+  return `${origin.replace(/\/+$/, "")}/q/${code.toUpperCase()}`;
 }
 
 /** Extrai o código da placa de um texto lido do QR (URL completa ou código puro). */
