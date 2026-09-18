@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as QCodeRouteImport } from './routes/q.$code'
 import { Route as AuthenticatedDestinosIndexRouteImport } from './routes/_authenticated/destinos/index'
+import { Route as AuthenticatedDestinosNovoRouteImport } from './routes/_authenticated/destinos/novo'
 import { Route as AuthenticatedPlacasIndexRouteImport } from './routes/_authenticated/placas/index'
 import { Route as AuthenticatedPlacasNovaRouteImport } from './routes/_authenticated/placas/nova'
 import { Route as AuthenticatedPlacasCodeConfigurarRouteImport } from './routes/_authenticated/placas/$code.configurar'
@@ -44,6 +45,12 @@ const AuthenticatedDestinosIndexRoute =
     path: '/destinos/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedDestinosNovoRoute =
+  AuthenticatedDestinosNovoRouteImport.update({
+    id: '/destinos/novo',
+    path: '/destinos/novo',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedPlacasIndexRoute =
   AuthenticatedPlacasIndexRouteImport.update({
     id: '/placas/',
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/q/$code': typeof QCodeRoute
+  '/destinos/novo': typeof AuthenticatedDestinosNovoRoute
   '/placas/nova': typeof AuthenticatedPlacasNovaRoute
   '/destinos/': typeof AuthenticatedDestinosIndexRoute
   '/placas/': typeof AuthenticatedPlacasIndexRoute
@@ -82,6 +90,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/q/$code': typeof QCodeRoute
+  '/destinos/novo': typeof AuthenticatedDestinosNovoRoute
   '/placas/nova': typeof AuthenticatedPlacasNovaRoute
   '/destinos': typeof AuthenticatedDestinosIndexRoute
   '/placas': typeof AuthenticatedPlacasIndexRoute
@@ -94,6 +103,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/q/$code': typeof QCodeRoute
+  '/_authenticated/destinos/novo': typeof AuthenticatedDestinosNovoRoute
   '/_authenticated/placas/nova': typeof AuthenticatedPlacasNovaRoute
   '/_authenticated/destinos/': typeof AuthenticatedDestinosIndexRoute
   '/_authenticated/placas/': typeof AuthenticatedPlacasIndexRoute
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/q/$code'
+    | '/destinos/novo'
     | '/placas/nova'
     | '/destinos/'
     | '/placas/'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/q/$code'
+    | '/destinos/novo'
     | '/placas/nova'
     | '/destinos'
     | '/placas'
@@ -127,6 +139,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/q/$code'
+    | '/_authenticated/destinos/novo'
     | '/_authenticated/placas/nova'
     | '/_authenticated/destinos/'
     | '/_authenticated/placas/'
@@ -178,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDestinosIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/destinos/novo': {
+      id: '/_authenticated/destinos/novo'
+      path: '/destinos/novo'
+      fullPath: '/destinos/novo'
+      preLoaderRoute: typeof AuthenticatedDestinosNovoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/placas/': {
       id: '/_authenticated/placas/'
       path: '/placas'
@@ -210,6 +230,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDestinosNovoRoute: typeof AuthenticatedDestinosNovoRoute
   AuthenticatedPlacasNovaRoute: typeof AuthenticatedPlacasNovaRoute
   AuthenticatedDestinosIndexRoute: typeof AuthenticatedDestinosIndexRoute
   AuthenticatedPlacasIndexRoute: typeof AuthenticatedPlacasIndexRoute
@@ -218,6 +239,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDestinosNovoRoute: AuthenticatedDestinosNovoRoute,
   AuthenticatedPlacasNovaRoute: AuthenticatedPlacasNovaRoute,
   AuthenticatedDestinosIndexRoute: AuthenticatedDestinosIndexRoute,
   AuthenticatedPlacasIndexRoute: AuthenticatedPlacasIndexRoute,
